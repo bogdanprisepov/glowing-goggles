@@ -1,0 +1,15 @@
+        guard let pointID = PointsRecognizer.findPoint(
+            point,
+            in: state.collage
+        )?.id else {
+            return state
+        }
+        
+        var newState = state
+        
+        if newState.selectedPointsIDs.isEmpty,
+           let dependencies = state.collage.dependencies.first(where: {
+               $0.pointIDs.contains(pointID)
+           }) {
+            newState.selectedPointsIDs.formUnion(dependencies.pointIDs)
+        }
